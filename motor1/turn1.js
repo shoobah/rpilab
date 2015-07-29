@@ -18,14 +18,14 @@ var seq = [
 var currentStep = 0
 
 function step () {
-  if (currentStep > seq.length) {
+  if (currentStep >= seq.length) {
     currentStep = 0
   }
-  in1.syncWrite(seq[currentStep][0])
-  in2.syncWrite(seq[currentStep][1])
-  in3.syncWrite(seq[currentStep][2])
-  in4.syncWrite(seq[currentStep][3])
+  in1.writeSync(seq[currentStep][0])
+  in2.writeSync(seq[currentStep][1])
+  in3.writeSync(seq[currentStep][2])
+  in4.writeSync(seq[currentStep][3])
   currentStep += 1
 }
 
-setInterval(step, 100)
+setInterval(step, 1)
