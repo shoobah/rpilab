@@ -10,7 +10,7 @@ var modes = {
       [0, 0, 0, 1],
       [1, 0, 0, 1]
     ],
-    stepsPerRevolution: 4096
+    stepsPerRevolution: 4160
   },
   fullstep: {
     seq: [
@@ -19,7 +19,7 @@ var modes = {
       [0, 1, 1, 0],
       [0, 0, 1, 1]
     ],
-    stepsPerRevolution: 4096
+    stepsPerRevolution: 2048
   },
   // Not working with 28BYJ-48
   wave: {

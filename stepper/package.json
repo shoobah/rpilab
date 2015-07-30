@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "nanotimer": "^0.3.10",
     "onoff": "^1.0.2"
   }
 }

@@ -1,5 +1,13 @@
 var GPIO = require('onoff').Gpio
 var Modes = require('./modes')
+var Nano = require('nanotimer')
+var Util = require('util')
+var EventEmitter = require('events').EventEmitter
+
+var ee = new EventEmitter()
+//TODO: Make this code inherit eventemitter and emit event when motor is done
+var Timer = new Nano()
+
 var in1 = GPIO(4, 'out')
 var in2 = GPIO(17, 'out')
 var in3 = GPIO(23, 'out')
@@ -26,15 +34,19 @@ function step (stepMode, numSteps, increment, stepper) {
     numSteps = stepMode.stepsPerRevolution
   }
   led.writeSync(1)
-  if (count > numSteps && this.stepper !== null) {
-    clearInterval(stepper)
+  if (count > numSteps && stepper !== null) {
+    Timer.clearInterval(stepper)
     led.writeSync(0)
   }
 }
 
 var motor = {
+  settings: {
+    stepMode: Modes.halfstep,
+    delay: '2m'
+  },
   turnMotor: function (angle) {
-    var stepMode = Modes.halfstep
+    var stepMode = this.settings.stepMode
     var stepsPerDegree = stepMode.stepsPerRevolution / 360
     var maxSteps = angle * stepsPerDegree
     var increment = 1
@@ -42,7 +54,7 @@ var motor = {
       maxSteps = maxSteps * -1
       increment = -1
     }
-    var stepper = setInterval(function () {step(stepMode, maxSteps, increment, stepper)}, 0.1)
+    var stepper = Timer.setInterval(step, [stepMode, maxSteps, increment, stepper], this.settings.delay)
   }
 }
 
